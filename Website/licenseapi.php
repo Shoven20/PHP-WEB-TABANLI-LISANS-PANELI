@@ -8,11 +8,11 @@
 
 <?php // SHOVEN PHP API
 try {
-    $dsn = 'mysql:host=' . $config['host'] . ';dbname=' . $config['db_name'];
     $db = new PDO("mysql:host=localhost;dbname=loginsystem;charset=utf8mb4", "root", "");
 } catch (PDOException $e) {
     print $e->getMessage();
 }
+
 
 if (isset($_GET["license"]) && isset($_GET["hwid"])) {
     $license = $_GET["license"];
@@ -33,7 +33,7 @@ if (isset($_GET["license"]) && isset($_GET["hwid"])) {
             if ($save) {
                 echo "HWID: " . $hwid . " ";
             } else {
-                echo "HWID güncellenemedi";
+                echo "Failed to update HWID";
             }
         } else {
             echo "HWID: " . $result["hwid"] . " ";
@@ -49,11 +49,11 @@ if (isset($_GET["license"]) && isset($_GET["hwid"])) {
             $remainingDays = $interval->format('%a');
 
             echo "Days: " . $remainingDays;
-                } else {
-            echo "Lisans süresi dolmuş!";
+        } else {
+            echo "License has expired!";
         }
     } else {
-        echo "Geçersiz lisans";
+        echo "Invalid license";
     }
 }
 ?>
