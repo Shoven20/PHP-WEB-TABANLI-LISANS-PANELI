@@ -22,7 +22,7 @@ if (isset($_POST["manual_license"])) {
         $insert = $db->prepare("INSERT INTO license (license,expiryend) VALUES (:license,:expiryend)");
         $insert->execute([
             'license' => $license,
-            'expiryend' => date('d-m-Y H:i:s', strtotime("+$license_days seconds"))
+            'expiryend' => date('d-m-Y H:i:s', strtotime("+$license_days days"))
         ]);
 
         $successMessage = "Lisans başarıyla eklendi!";
