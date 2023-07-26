@@ -2,8 +2,8 @@
 #include <random>
 #include <sstream>
 #include <iostream>
-#pragma comment(lib, "urlmon.lib")
-#include <urlmon.h>
+ #include <WinInet.h>
+#pragma comment(lib, "wininet.lib")
 
 using namespace std;
 
@@ -21,45 +21,36 @@ std::string Karistir(Args const& ... args)
     };
     return stream.str();
 }
-void HwidVer() {
-    HW_PROFILE_INFO hwProfileInfo;
-    GetCurrentHwProfile(&hwProfileInfo);
-    string hwidWString = hwProfileInfo.szHwProfileGuid;
-    string a = hwidWString.substr(1, 8);
-    string b = hwidWString.substr(10, 4);
-    string c = hwidWString.substr(15, 4);
-    string karismis = Karistir(b, c, a);
-    HwidAdresi = karismis;
-}
 
 int main() {
-    HwidVer();
     cout << "License: ";
     cin >> Anahtar;
     string url = "http://(DOMAIN ADRESINIZ)/licenseapi.php?license=" + Anahtar + "&hwid=" + HwidAdresi + "&expiryend=";
-    IStream* stream;
-    URLOpenBlockingStreamA(0, url.c_str(), &stream, 0, 0);
-    char buffer[100];
-    unsigned long bytesRead;
-    stringstream ss;
-    stream->Read(buffer, 100, &bytesRead);
-    while (bytesRead > 0U)
-    {
-        ss.write(buffer, (long long)bytesRead);
-        stream->Read(buffer, 100, &bytesRead);
-    }
-    string strResult = ss.str();
- 
+    DWORD dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
+    HINTERNET hInternet = InternetOpenA(_xor_("WebReader").c_str(), dwAccessType, NULL, NULL, 0);
+    HINTERNET hConnect = InternetOpenUrlA(hInternet, url.c_str(), NULL, 0, INTERNET_FLAG_RELOAD, 0);
+    char buffer[4096];
+    DWORD bytesRead;
+    InternetReadFile(hConnect, buffer, sizeof(buffer), &bytesRead);
+    string strResult = buffer;
     size_t hwidPos = strResult.find("HWID: ");
     size_t daysPos = strResult.find("Days: ");
-
     if (hwidPos != std::string::npos && daysPos != std::string::npos) {
         hwidPos += 6;
         HWIDStr = strResult.substr(hwidPos, daysPos - hwidPos - 1);
         daysPos += 6;
         ExpiryDays = std::stoi(strResult.substr(daysPos));
     }
-   
+
+    HW_PROFILE_INFO hwProfileInfo;
+    GetCurrentHwProfile(&hwProfileInfo);
+    string hwidWString = hwProfileInfo.szHwProfileGuid;
+    string a = hwidWString.substr(1, 8);
+    string b = hwidWString.substr(10, 4);
+    string c = hwidWString.substr(15, 4);
+    HwidAdresi = Karistir(b, c, a);
+
+    
     if (HWIDStr == "Banned") {
         cout << "Hesabiniz yasaklandi.\n\n";
         Sleep(5000);
