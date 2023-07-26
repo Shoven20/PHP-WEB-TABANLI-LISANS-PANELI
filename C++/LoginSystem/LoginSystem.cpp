@@ -1,7 +1,8 @@
-﻿#include <tchar.h>
+﻿#include <windows.h>
+#include <iostream>
+#include <tchar.h>
 #include <random>
 #include <sstream>
-#include <iostream>
  #include <WinInet.h>
 #pragma comment(lib, "wininet.lib")
 
