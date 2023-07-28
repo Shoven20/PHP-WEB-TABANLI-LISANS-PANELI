@@ -9,8 +9,7 @@
 using namespace std;
 
 int ExpiryDays;
-string Anahtar, HwidAdresi;
-string HWIDStr;
+string Anahtar, HwidAdresi, HWIDStr;
 
 template< typename ... Args >
 std::string Karistir(Args const& ... args)
@@ -27,10 +26,9 @@ int main() {
     cout << "License: ";
     cin >> Anahtar;
     string url = "http://(DOMAIN ADRESINIZ)/licenseapi.php?license=" + Anahtar + "&hwid=" + HwidAdresi + "&expiryend=";
-    DWORD dwAccessType = INTERNET_OPEN_TYPE_DIRECT;
-    HINTERNET hInternet = InternetOpenA(_xor_("WebReader").c_str(), dwAccessType, NULL, NULL, 0);
+    HINTERNET hInternet = InternetOpenA("WebReader", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
     HINTERNET hConnect = InternetOpenUrlA(hInternet, url.c_str(), NULL, 0, INTERNET_FLAG_RELOAD, 0);
-    char buffer[4096];
+    char buffer[1024];
     DWORD bytesRead;
     InternetReadFile(hConnect, buffer, sizeof(buffer), &bytesRead);
     string strResult = buffer;
@@ -50,19 +48,16 @@ int main() {
     string b = hwidWString.substr(10, 4);
     string c = hwidWString.substr(15, 4);
     HwidAdresi = Karistir(b, c, a);
-
     
-    if (HWIDStr == "Banned") {
+ 
+    if (HWIDStr == HwidAdresi) {
+        cout << "Giris Basarili.\n\n";
+        std::cout << "Kalan Lisans: " << ExpiryDays << " Gun." <<std::endl;
+    }
+    else if (HWIDStr == "Banned") {
         cout << "Hesabiniz yasaklandi.\n\n";
         Sleep(5000);
         exit(0);
-    }
-    if (HWIDStr == HwidAdresi) {
-        cout << "Giris Basarili.\n\n";
-
-
-        std::cout << "Kalan Lisans: " << ExpiryDays << " Gun." <<std::endl;
-
     }
     else {
         cout << "HWID eslesmiyor.\n\n";
