@@ -73,16 +73,7 @@ std::string base64_encode(const std::string& input) {
     }
     return encoded;
 }
-template< typename ... Args >
-std::string Karistir(Args const& ... args)
-{
-    std::ostringstream stream;
-    using List = int[];
-    (void)List {
-        0, ((void)(stream << args), 0) ...
-    };
-    return stream.str();
-}
+
 std::string HwidVer() {
     DWORD serialNumber;
     GetVolumeInformation("C:\\", NULL, 0, &serialNumber, NULL, NULL, NULL, 0);
