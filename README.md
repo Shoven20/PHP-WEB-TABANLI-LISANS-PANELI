@@ -1,2 +1,2 @@
 # PHP-WEB-TABANLI-LISANS-PANELI
-![Website](https://github.com/Shoven20/PHP-WEB-TABANLI-LISANS-PANELI/assets/88746889/7c7e62f7-96a4-4a09-a01a-04ed258e076f)
+ ![image](https://github.com/Shoven20/PHP-WEB-TABANLI-LISANS-PANELI/assets/88746889/0073926c-12c6-4b26-95fe-ec09bcf6bfdf)
