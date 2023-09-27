@@ -1,10 +1,4 @@
 ﻿<?php
-
-$whitelist = array('5.180.106.192', '195.155.187.214', '95.70.181.117');
-if (!(in_array($_SERVER['REMOTE_ADDR'], $whitelist))) {
- exit;
-}
-
 try {
     $db = new PDO("mysql:host=localhost;dbname=loginsystem;charset=utf8mb4", "root", "");
 } catch (PDOException $e) {
