@@ -1,4 +1,4 @@
-﻿#include <windows.h>
+#include <windows.h>
 #include <iostream>
 #include <tchar.h>
 #include <random>
@@ -17,7 +17,7 @@ int main() {
     cout << "License: ";
     cin >> Anahtar;
     HwidAdresi = HwidVer();
-    string url = _xor_("http://5.180.106.192/licenseapi.php?license=").c_str() + BeniSifrele(Anahtar) + _xor_("&hwid=").c_str() + BeniSifrele(HwidAdresi) + _xor_("&expiryend=").c_str();
+    string url = _xor_("http://0.0.0.0/licenseapi.php?license=").c_str() + BeniSifrele(Anahtar) + _xor_("&hwid=").c_str() + BeniSifrele(HwidAdresi);
     HINTERNET hInternet = InternetOpenA(_xor_("WebReader").c_str(), INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
     HINTERNET hConnect = InternetOpenUrlA(hInternet, url.c_str(), NULL, 0, INTERNET_FLAG_RELOAD, 0);
     char buffer[4096];
