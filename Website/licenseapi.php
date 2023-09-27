@@ -18,8 +18,8 @@ if (isset($_GET["license"]) && isset($_GET["hwid"])) {
         if (empty($result["hwid"])) {
             $update = $db->prepare("UPDATE license SET hwid = :hwid WHERE license = :license");
             $save = $update->execute([
-                "hwid" =>  (str_rot13(($hwid))),
-                "license" => (str_rot13(($license)))
+                "hwid" =>  $hwid,
+                "license" => $license
             ]);
 
             if ($save) {
