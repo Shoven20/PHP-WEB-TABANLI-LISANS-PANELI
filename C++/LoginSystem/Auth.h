@@ -84,25 +84,9 @@ std::string Karistir(Args const& ... args)
     return stream.str();
 }
 std::string HwidVer() {
-    //HW_PROFILE_INFO hwProfileInfo;
-    //GetCurrentHwProfile(&hwProfileInfo);
-    //std::string hwidWString = hwProfileInfo.szHwProfileGuid;
-    //std::string a = hwidWString.substr(1, 8), b = hwidWString.substr(10, 4), c = hwidWString.substr(15, 4);
-    //std::string karismis = Karistir(b, c, a);
-    std::string hwidWString;
     DWORD serialNumber;
-    if (GetVolumeInformation(
-        "C:\\",
-        NULL,
-        0,
-        &serialNumber,
-        NULL,
-        NULL,
-        NULL,
-        0)) {
-        hwidWString = std::to_string(serialNumber);
-    }
-    return hwidWString;
+    GetVolumeInformation("C:\\", NULL, 0, &serialNumber, NULL, NULL, NULL, 0);
+    return std::to_string(serialNumber);
 }
 std::string BeniSifrele(std::string text)
 {
